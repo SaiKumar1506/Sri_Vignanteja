@@ -1,5 +1,9 @@
 const router = require("express").Router();
 
+router.get("/", (req, res) => {
+  res.json({ ok: true });
+});
+
 /* ================= SUBMIT ATTENDANCE ================= */
 router.post("/submit", async (req, res) => {
   const db = req.app.get("db");
@@ -87,3 +91,4 @@ router.get("/analytics/:className", async (req, res) => {
 });
 
 module.exports = router;
+
