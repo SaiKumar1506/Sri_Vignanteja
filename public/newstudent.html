@@ -23,6 +23,7 @@
         </p>
       </div>
     </div>
+
     <a href="index.html"
       class="group flex items-center gap-2 px-4 py-2 rounded-xl border bg-white hover:bg-slate-50 transition font-semibold text-slate-600">
       <i class="fas fa-arrow-left text-sm group-hover:-translate-x-1 transition-transform"></i>
@@ -34,12 +35,11 @@
 <main class="max-w-6xl mx-auto px-4 py-8">
 <div class="grid lg:grid-cols-3 gap-8">
 
-<div class="lg:col-span-2 space-y-6">
+<!-- LEFT FORM -->
+<div class="lg:col-span-2">
 <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-8">
-
 <form id="studentForm" class="space-y-5">
 
-<!-- BASIC INFO -->
 <div class="grid md:grid-cols-2 gap-5">
   <div>
     <label class="text-sm font-bold text-slate-700 ml-1">Student Full Name</label>
@@ -60,26 +60,26 @@
     <label class="text-sm font-bold text-slate-700 ml-1">Assigned Class</label>
     <select id="stuClass" required class="w-full p-3.5 bg-slate-50 border rounded-2xl">
       <option value="">Choose Class...</option>
-      <option value="LKG Visista">LKG Visista</option>
-      <option value="LKG Vijaya">LKG Vijaya</option>
-      <option value="LKG Vijetha">LKG Vijetha</option>
-      <option value="UKG Vinaya">UKG Vinaya</option>
-      <option value="UKG Veena">UKG Veena</option>
-      <option value="Class 1-Vishnu">Class 1-Vishnu</option>
-      <option value="Class 1-Vidhya">Class 1-Vidhya</option>
-      <option value="Class 2-Victory">Class 2-Victory</option>
-      <option value="Class 3-Vishikha">Class 3-Vishikha</option>
-      <option value="Class 4-Viswateja">Class 4-Viswateja</option>
-      <option value="Class 5-Viswajith">Class 5-Viswajith</option>
-      <option value="Class 6-Vijay Aditya">Class 6-Vijay Aditya</option>
-      <option value="Class 7-Vikram Adithya">Class 7-Vikram Adithya</option>
+      <option>LKG Visista</option>
+      <option>LKG Vijaya</option>
+      <option>LKG Vijetha</option>
+      <option>UKG Vinaya</option>
+      <option>UKG Veena</option>
+      <option>Class 1-Vishnu</option>
+      <option>Class 1-Vidhya</option>
+      <option>Class 2-Victory</option>
+      <option>Class 3-Vishikha</option>
+      <option>Class 4-Viswateja</option>
+      <option>Class 5-Viswajith</option>
+      <option>Class 6-Vijay Aditya</option>
+      <option>Class 7-Vikram Adithya</option>
     </select>
   </div>
 </div>
 
 <div>
   <label class="text-sm font-bold text-slate-700 ml-1">Address</label>
-  <textarea id="stuAddress" required rows="3"
+  <textarea id="stuAddress" rows="3" required
     class="w-full p-3.5 bg-slate-50 border rounded-2xl"></textarea>
 </div>
 
@@ -102,6 +102,13 @@
   <input type="hidden" id="stuTotal" value="0">
 </div>
 
+<!-- DATE -->
+<div>
+  <label class="text-sm font-bold text-slate-700 ml-1">Date</label>
+  <input id="stuDate" type="date"
+    class="w-full p-3.5 bg-slate-50 border rounded-2xl">
+</div>
+
 <button class="w-full bg-blue-600 text-white p-4 rounded-2xl font-bold">
   Save Student Record
 </button>
@@ -110,13 +117,40 @@
 </div>
 </div>
 
-<!-- PREVIEW -->
-<div class="bg-blue-600 rounded-3xl p-6 text-white">
-  <p id="prevName" class="text-2xl font-bold">Student Name</p>
-  <p>Parent: <span id="prevParentName">-</span></p>
-  <p id="prevClass">Class:</p>
-  <p id="prevAddress">Address</p>
-  <p id="prevBalance" class="text-xl font-bold">₹0</p>
+<!-- RIGHT PREVIEW -->
+<div class="bg-blue-600 rounded-3xl p-6 text-white shadow-xl">
+  <h3 class="text-sm font-bold opacity-80 uppercase tracking-tighter mb-4">
+    Live Preview
+  </h3>
+
+  <div class="space-y-1">
+    <p id="prevName" class="text-2xl font-bold truncate">Student Name</p>
+    <p class="opacity-90 text-sm">
+      Parent: <span id="prevParentName">Not Provided</span>
+    </p>
+    <p id="prevClass" class="opacity-90 font-medium">
+      Class: Not Selected
+    </p>
+  </div>
+
+  <div class="mt-6 pt-6 border-t border-white/20">
+    <div class="mb-4">
+      <p class="text-[10px] uppercase font-bold opacity-70 mb-1">Address</p>
+      <p id="prevAddress" class="text-sm opacity-90 truncate">
+        No address provided
+      </p>
+    </div>
+
+    <div class="flex justify-between items-end">
+      <div>
+        <p class="text-[10px] uppercase font-bold opacity-70">Total Fee</p>
+        <p id="prevBalance" class="text-2xl font-black">₹0</p>
+      </div>
+      <div class="bg-white/20 p-3 rounded-2xl">
+        <i class="fas fa-wallet fa-lg"></i>
+      </div>
+    </div>
+  </div>
 </div>
 
 </div>
@@ -126,27 +160,10 @@
 const API = "https://sri-vignanteja.onrender.com";
 
 /* HELPERS */
-function getStudentId() {
-  return new URLSearchParams(window.location.search).get("id");
-}
+const getId = () => new URLSearchParams(window.location.search).get("id");
 
 /* ELEMENTS */
-const form = document.getElementById("studentForm");
-const nameInput = stuName;
-const parentNameInput = parentName;
-const phoneInput = stuPhone;
-const classSelect = stuClass;
-const addressInput = stuAddress;
-const totalFeeInput = stuTotal;
-
 const totalFeeContainer = document.getElementById("totalFeeContainer");
-const totalFeeSum = document.getElementById("totalFeeSum");
-
-const prevName = document.getElementById("prevName");
-const prevParent = document.getElementById("prevParentName");
-const prevClass = document.getElementById("prevClass");
-const prevAddress = document.getElementById("prevAddress");
-const prevBalance = document.getElementById("prevBalance");
 
 /* FEE ROW */
 function createFeeItem(type = "", amount = "") {
@@ -160,91 +177,68 @@ function createFeeItem(type = "", amount = "") {
       <option value="Van Fee">Van Fee</option>
       <option value="Others">Others</option>
     </select>
-    <input type="number" class="fee-amount w-32 p-2 border rounded-lg" placeholder="Amount" value="${amount}">
+    <input type="number" class="fee-amount w-32 p-2 border rounded-lg" value="${amount}">
     <button type="button" class="text-red-500">✖</button>
   `;
 
   div.querySelector(".fee-type").value = type;
-  div.querySelector(".fee-amount").addEventListener("input", updateTotal);
+  div.querySelector(".fee-amount").oninput = updateTotal;
   div.querySelector("button").onclick = () => { div.remove(); updateTotal(); };
 
   totalFeeContainer.appendChild(div);
 }
 
-/* TOTAL */
 function updateTotal() {
   let total = 0;
-  document.querySelectorAll(".fee-amount").forEach(i => {
-    total += Number(i.value || 0);
-  });
-  totalFeeInput.value = total;
+  document.querySelectorAll(".fee-amount").forEach(i => total += Number(i.value || 0));
+  stuTotal.value = total;
   totalFeeSum.innerText = `₹${total}`;
   prevBalance.innerText = `₹${total}`;
 }
 
-/* PREVIEW */
 function updatePreview() {
-  prevName.innerText = nameInput.value || "Student Name";
-  prevParent.innerText = parentNameInput.value || "-";
-  prevClass.innerText = classSelect.value ? `Class: ${classSelect.value}` : "Class:";
-  prevAddress.innerText = addressInput.value || "Address";
-  prevBalance.innerText = `₹${totalFeeInput.value || 0}`;
+  prevName.innerText = stuName.value || "Student Name";
+  prevParentName.innerText = parentName.value || "Not Provided";
+  prevClass.innerText = stuClass.value ? `Class: ${stuClass.value}` : "Class: Not Selected";
+  prevAddress.innerText = stuAddress.value || "No address provided";
 }
 
-[nameInput, parentNameInput, phoneInput, addressInput].forEach(e =>
-  e.addEventListener("input", updatePreview)
-);
-classSelect.addEventListener("change", updatePreview);
-
 /* SUBMIT */
-form.addEventListener("submit", async e => {
+studentForm.onsubmit = async e => {
   e.preventDefault();
+  const id = getId();
 
-  const id = getStudentId();
-
-  const payload = {
-    name: nameInput.value,
-    parent_name: parentNameInput.value,
-    phone: phoneInput.value,
-    class_name: classSelect.value,
-    address: addressInput.value,
-    total_fee: Number(totalFeeInput.value)
-  };
-
-  const url = id
-    ? `${API}/students/update/${id}`
-    : `${API}/students/add`;
-
-  await fetch(url, {
+  await fetch(id ? `${API}/students/update/${id}` : `${API}/students/add`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
+    body: JSON.stringify({
+      name: stuName.value,
+      parent_name: parentName.value,
+      phone: stuPhone.value,
+      class_name: stuClass.value,
+      address: stuAddress.value,
+      total_fee: Number(stuTotal.value)
+    })
   });
 
-  window.location.href = "list.html";
-});
+  location.href = "list.html";
+};
 
 /* EDIT MODE */
-const editId = getStudentId();
+const editId = getId();
 if (editId) {
   pageTitle.innerText = "Edit Student Profile";
-
   fetch(`${API}/students/${editId}`)
     .then(r => r.json())
     .then(s => {
-      nameInput.value = s.name;
-      parentNameInput.value = s.parent_name;
-      phoneInput.value = s.phone;
-      classSelect.value = s.class_name;
-      addressInput.value = s.address || "";
-
+      stuName.value = s.name;
+      parentName.value = s.parent_name;
+      stuPhone.value = s.phone;
+      stuClass.value = s.class_name;
+      stuAddress.value = s.address || "";
       totalFeeContainer.innerHTML = "";
-      if (s.fees && s.fees.length) {
-        s.fees.forEach(f => createFeeItem(f.fee_type, f.amount));
-      } else {
-        createFeeItem();
-      }
-
+      if (s.fees?.length) s.fees.forEach(f => createFeeItem(f.fee_type, f.amount));
+      else createFeeItem();
       updateTotal();
       updatePreview();
     });
