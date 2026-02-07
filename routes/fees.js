@@ -1,5 +1,9 @@
 const router = require("express").Router();
 
+router.get("/", (req, res) => {
+  res.json({ ok: true });
+});
+
 /* ================= PAY FEE ================= */
 router.post("/pay", async (req, res) => {
   const db = req.app.get("db");
@@ -104,3 +108,4 @@ router.get("/report", async (req, res) => {
 });
 
 module.exports = router;
+
