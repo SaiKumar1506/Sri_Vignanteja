@@ -10,128 +10,134 @@
 
 <body class="bg-slate-50 min-h-screen font-sans">
 
-  <!-- ===== HEADER (UNCHANGED) ===== -->
-  <header class="bg-white shadow-sm border-b sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="bg-blue-600 text-white p-2 rounded-lg">
-          <i class="fas fa-user-plus"></i>
-        </div>
-        <div>
-          <h1 class="text-xl font-bold text-slate-800" id="pageTitle">Add New Student</h1>
-          <p class="text-xs text-slate-500 font-medium uppercase tracking-wider">
-            Student Management System
-          </p>
-        </div>
+<header class="bg-white shadow-sm border-b sticky top-0 z-50">
+  <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="bg-blue-600 text-white p-2 rounded-lg">
+        <i class="fas fa-user-plus"></i>
       </div>
-
-      <a href="index.html"
-        class="group flex items-center gap-2 px-4 py-2 rounded-xl border bg-white hover:bg-slate-50 transition font-semibold text-slate-600">
-        <i class="fas fa-arrow-left text-sm group-hover:-translate-x-1 transition-transform"></i>
-        Back to Dashboard
-      </a>
+      <div>
+        <h1 class="text-xl font-bold text-slate-800" id="pageTitle">Add New Student</h1>
+        <p class="text-xs text-slate-500 font-medium uppercase tracking-wider">
+          Student Management System
+        </p>
+      </div>
     </div>
-  </header>
+    <a href="index.html"
+      class="group flex items-center gap-2 px-4 py-2 rounded-xl border bg-white hover:bg-slate-50 transition font-semibold text-slate-600">
+      <i class="fas fa-arrow-left text-sm group-hover:-translate-x-1 transition-transform"></i>
+      Back to Dashboard
+    </a>
+  </div>
+</header>
 
-  <!-- ===== MAIN (UNCHANGED UI) ===== -->
-  <main class="max-w-6xl mx-auto px-4 py-8">
-    <div class="grid lg:grid-cols-3 gap-8">
+<main class="max-w-6xl mx-auto px-4 py-8">
+<div class="grid lg:grid-cols-3 gap-8">
 
-      <div class="lg:col-span-2 space-y-6">
-        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-8">
+<div class="lg:col-span-2 space-y-6">
+<div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-8">
 
-          <form id="studentForm" class="space-y-5">
+<form id="studentForm" class="space-y-5">
 
-            <!-- Basic Fields -->
-            <div class="grid md:grid-cols-2 gap-5">
-              <div>
-                <label class="text-sm font-bold text-slate-700 ml-1">Student Full Name</label>
-                <input id="stuName" required class="w-full p-3.5 bg-slate-50 border rounded-2xl">
-              </div>
-              <div>
-                <label class="text-sm font-bold text-slate-700 ml-1">Parent Name</label>
-                <input id="parentName" required class="w-full p-3.5 bg-slate-50 border rounded-2xl">
-              </div>
-            </div>
+<!-- BASIC INFO -->
+<div class="grid md:grid-cols-2 gap-5">
+  <div>
+    <label class="text-sm font-bold text-slate-700 ml-1">Student Full Name</label>
+    <input id="stuName" required class="w-full p-3.5 bg-slate-50 border rounded-2xl">
+  </div>
+  <div>
+    <label class="text-sm font-bold text-slate-700 ml-1">Parent Name</label>
+    <input id="parentName" required class="w-full p-3.5 bg-slate-50 border rounded-2xl">
+  </div>
+</div>
 
-            <div class="grid md:grid-cols-2 gap-5">
-              <div>
-                <label class="text-sm font-bold text-slate-700 ml-1">Parent Contact Number</label>
-                <input id="stuPhone" required maxlength="10" class="w-full p-3.5 bg-slate-50 border rounded-2xl">
-              </div>
-              <div>
-                <label class="text-sm font-bold text-slate-700 ml-1">Assigned Class</label>
-                <select id="stuClass" required class="w-full p-3.5 bg-slate-50 border rounded-2xl">
-                  <option value="">Choose Class...</option>
-                  <option>LKG Visista</option>
-                  <option>UKG Vinaya</option>
-                  <option>Class 1-Vishnu</option>
-                </select>
-              </div>
-            </div>
+<div class="grid md:grid-cols-2 gap-5">
+  <div>
+    <label class="text-sm font-bold text-slate-700 ml-1">Parent Contact Number</label>
+    <input id="stuPhone" required maxlength="10" class="w-full p-3.5 bg-slate-50 border rounded-2xl">
+  </div>
+  <div>
+    <label class="text-sm font-bold text-slate-700 ml-1">Assigned Class</label>
+    <select id="stuClass" required class="w-full p-3.5 bg-slate-50 border rounded-2xl">
+      <option value="">Choose Class...</option>
+      <option value="LKG Visista">LKG Visista</option>
+      <option value="LKG Vijaya">LKG Vijaya</option>
+      <option value="LKG Vijetha">LKG Vijetha</option>
+      <option value="UKG Vinaya">UKG Vinaya</option>
+      <option value="UKG Veena">UKG Veena</option>
+      <option value="Class 1-Vishnu">Class 1-Vishnu</option>
+      <option value="Class 1-Vidhya">Class 1-Vidhya</option>
+      <option value="Class 2-Victory">Class 2-Victory</option>
+      <option value="Class 3-Vishikha">Class 3-Vishikha</option>
+      <option value="Class 4-Viswateja">Class 4-Viswateja</option>
+      <option value="Class 5-Viswajith">Class 5-Viswajith</option>
+      <option value="Class 6-Vijay Aditya">Class 6-Vijay Aditya</option>
+      <option value="Class 7-Vikram Adithya">Class 7-Vikram Adithya</option>
+    </select>
+  </div>
+</div>
 
-            <div>
-              <label class="text-sm font-bold text-slate-700 ml-1">Address</label>
-              <textarea id="stuAddress" required rows="3"
-                class="w-full p-3.5 bg-slate-50 border rounded-2xl"></textarea>
-            </div>
+<div>
+  <label class="text-sm font-bold text-slate-700 ml-1">Address</label>
+  <textarea id="stuAddress" required rows="3"
+    class="w-full p-3.5 bg-slate-50 border rounded-2xl"></textarea>
+</div>
 
-            <!-- Fee -->
-            <div>
-              <div class="flex justify-between items-center">
-                <h3 class="font-bold text-slate-700">Total Fee</h3>
-                <button type="button" id="addTotalFee" class="text-blue-600 text-sm">
-                  <i class="fas fa-plus"></i> Add Fee Item
-                </button>
-              </div>
+<!-- FEES -->
+<div class="space-y-4">
+  <div class="flex justify-between">
+    <h3 class="font-bold">Total Fee</h3>
+    <button type="button" id="addTotalFee" class="text-blue-600 text-sm">
+      <i class="fas fa-plus"></i> Add Fee Item
+    </button>
+  </div>
 
-              <div id="totalFeeContainer" class="space-y-3 mt-3"></div>
+  <div id="totalFeeContainer" class="space-y-3"></div>
 
-              <div class="mt-3 p-3 bg-blue-50 rounded-xl flex justify-between">
-                <span class="font-bold">Total Amount:</span>
-                <span id="totalFeeSum" class="font-bold">₹0</span>
-              </div>
+  <div class="p-3 bg-blue-50 rounded-xl flex justify-between">
+    <span class="font-bold">Total Amount:</span>
+    <span id="totalFeeSum" class="font-bold">₹0</span>
+  </div>
 
-              <input type="hidden" id="stuTotal" value="0">
-            </div>
+  <input type="hidden" id="stuTotal" value="0">
+</div>
 
-            <button
-              class="w-full bg-blue-600 text-white p-4 rounded-2xl font-bold">
-              Save Student Record
-            </button>
+<button class="w-full bg-blue-600 text-white p-4 rounded-2xl font-bold">
+  Save Student Record
+</button>
 
-          </form>
-        </div>
-      </div>
+</form>
+</div>
+</div>
 
-      <!-- ===== PREVIEW (UNCHANGED) ===== -->
-      <div class="bg-blue-600 rounded-3xl p-6 text-white">
-        <p id="prevName" class="text-2xl font-bold">Student Name</p>
-        <p>Parent: <span id="prevParentName">-</span></p>
-        <p id="prevClass">Class:</p>
-        <p id="prevAddress">Address</p>
-        <p id="prevBalance" class="text-xl font-bold">₹0</p>
-      </div>
+<!-- PREVIEW -->
+<div class="bg-blue-600 rounded-3xl p-6 text-white">
+  <p id="prevName" class="text-2xl font-bold">Student Name</p>
+  <p>Parent: <span id="prevParentName">-</span></p>
+  <p id="prevClass">Class:</p>
+  <p id="prevAddress">Address</p>
+  <p id="prevBalance" class="text-xl font-bold">₹0</p>
+</div>
 
-    </div>
-  </main>
+</div>
+</main>
 
 <script>
-/* ================= HELPERS ================= */
-function getStudentIdFromURL() {
+const API = "https://sri-vignanteja.onrender.com";
+
+/* HELPERS */
+function getStudentId() {
   return new URLSearchParams(window.location.search).get("id");
 }
 
-const API = "https://sri-vignanteja.onrender.com";
-
-/* ================= ELEMENTS ================= */
+/* ELEMENTS */
 const form = document.getElementById("studentForm");
-const nameInput = document.getElementById("stuName");
-const parentNameInput = document.getElementById("parentName");
-const phoneInput = document.getElementById("stuPhone");
-const classSelect = document.getElementById("stuClass");
-const addressInput = document.getElementById("stuAddress");
-const totalFeeInput = document.getElementById("stuTotal");
+const nameInput = stuName;
+const parentNameInput = parentName;
+const phoneInput = stuPhone;
+const classSelect = stuClass;
+const addressInput = stuAddress;
+const totalFeeInput = stuTotal;
 
 const totalFeeContainer = document.getElementById("totalFeeContainer");
 const totalFeeSum = document.getElementById("totalFeeSum");
@@ -142,37 +148,59 @@ const prevClass = document.getElementById("prevClass");
 const prevAddress = document.getElementById("prevAddress");
 const prevBalance = document.getElementById("prevBalance");
 
-/* ================= FEE ================= */
-function createFeeItem() {
+/* FEE ROW */
+function createFeeItem(type = "", amount = "") {
   const div = document.createElement("div");
+  div.className = "flex items-center gap-3 p-3 bg-slate-50 rounded-xl";
+
   div.innerHTML = `
-    <input type="number" class="fee w-full p-2 border rounded" placeholder="Amount">
+    <select class="fee-type flex-1 p-2 border rounded-lg">
+      <option value="">Select Fee Type</option>
+      <option value="School Fee">School Fee</option>
+      <option value="Van Fee">Van Fee</option>
+      <option value="Others">Others</option>
+    </select>
+    <input type="number" class="fee-amount w-32 p-2 border rounded-lg" placeholder="Amount" value="${amount}">
+    <button type="button" class="text-red-500">✖</button>
   `;
-  div.querySelector(".fee").addEventListener("input", updateTotal);
+
+  div.querySelector(".fee-type").value = type;
+  div.querySelector(".fee-amount").addEventListener("input", updateTotal);
+  div.querySelector("button").onclick = () => { div.remove(); updateTotal(); };
+
   totalFeeContainer.appendChild(div);
 }
 
+/* TOTAL */
 function updateTotal() {
   let total = 0;
-  document.querySelectorAll(".fee").forEach(f => total += Number(f.value || 0));
+  document.querySelectorAll(".fee-amount").forEach(i => {
+    total += Number(i.value || 0);
+  });
   totalFeeInput.value = total;
   totalFeeSum.innerText = `₹${total}`;
   prevBalance.innerText = `₹${total}`;
 }
 
-/* ================= PREVIEW ================= */
+/* PREVIEW */
 function updatePreview() {
   prevName.innerText = nameInput.value || "Student Name";
   prevParent.innerText = parentNameInput.value || "-";
-  prevClass.innerText = classSelect.value || "";
-  prevAddress.innerText = addressInput.value || "";
+  prevClass.innerText = classSelect.value ? `Class: ${classSelect.value}` : "Class:";
+  prevAddress.innerText = addressInput.value || "Address";
+  prevBalance.innerText = `₹${totalFeeInput.value || 0}`;
 }
 
-/* ================= SUBMIT ================= */
+[nameInput, parentNameInput, phoneInput, addressInput].forEach(e =>
+  e.addEventListener("input", updatePreview)
+);
+classSelect.addEventListener("change", updatePreview);
+
+/* SUBMIT */
 form.addEventListener("submit", async e => {
   e.preventDefault();
 
-  const id = getStudentIdFromURL();
+  const id = getStudentId();
 
   const payload = {
     name: nameInput.value,
@@ -196,11 +224,10 @@ form.addEventListener("submit", async e => {
   window.location.href = "list.html";
 });
 
-/* ================= EDIT MODE ================= */
-const editId = getStudentIdFromURL();
-
+/* EDIT MODE */
+const editId = getStudentId();
 if (editId) {
-  document.getElementById("pageTitle").innerText = "Edit Student Profile";
+  pageTitle.innerText = "Edit Student Profile";
 
   fetch(`${API}/students/${editId}`)
     .then(r => r.json())
@@ -209,16 +236,22 @@ if (editId) {
       parentNameInput.value = s.parent_name;
       phoneInput.value = s.phone;
       classSelect.value = s.class_name;
-      addressInput.value = s.address;
-      totalFeeInput.value = s.total_fee || 0;
-      totalFeeSum.innerText = `₹${s.total_fee || 0}`;
-      prevBalance.innerText = `₹${s.total_fee || 0}`;
+      addressInput.value = s.address || "";
+
+      totalFeeContainer.innerHTML = "";
+      if (s.fees && s.fees.length) {
+        s.fees.forEach(f => createFeeItem(f.fee_type, f.amount));
+      } else {
+        createFeeItem();
+      }
+
+      updateTotal();
       updatePreview();
     });
 }
 
 /* INIT */
-document.getElementById("addTotalFee").addEventListener("click", createFeeItem);
+addTotalFee.onclick = () => createFeeItem();
 createFeeItem();
 updatePreview();
 </script>
