@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Vignanateja EM | Add-Edit Student</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-slate-50 min-h-screen font-sans">
+
+  <header class="bg-white shadow-sm border-b sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="bg-blue-600 text-white p-2 rounded-lg">
+            <i class="fas fa-user-plus"></i>
+        </div>
+        <div>
+          <h1 class="text-xl font-bold text-slate-800" id="pageTitle">Add New Student</h1>
+          <p class="text-xs text-slate-500 font-medium uppercase tracking-wider">Student Management System</p>
+        </div>
+      </div>
+
+      <a href="index.html"
+        class="group flex items-center gap-2 px-4 py-2 rounded-xl border bg-white hover:bg-slate-50 transition font-semibold text-slate-600">
+        <i class="fas fa-arrow-left text-sm group-hover:-translate-x-1 transition-transform"></i>
+        Back to Dashboard
+      </a>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <div class="grid lg:grid-cols-3 gap-8">
+
+      <div class="lg:col-span-2 space-y-6">
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-8">
+            <h2 class="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <i class="fas fa-id-card text-blue-500"></i>
+                Basic Information
+            </h2>
+
+            <form id="studentForm" class="space-y-5">
+              <div class="grid md:grid-cols-2 gap-5">
+                <div class="space-y-1">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Student Full Name</label>
+                    <input id="stuName" required placeholder="Enter student name"
+                      class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all outline-none">
+                </div>
+
+                <div class="space-y-1">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Parent Name</label>
+                    <input id="parentName" required placeholder="Enter parent name"
+                      class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all outline-none">
+                </div>
+              </div>
+
+              <div class="grid md:grid-cols-2 gap-5">
+                <div class="space-y-1">
+                    <label class="text-sm font-bold text-slate-700 ml-1">Parent Contact Number</label>
+                    <input id="stuPhone" required type="tel" maxlength="10" placeholder="10-digit mobile"
+                      class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all outline-none">
+                </div>
+
+                <div class="space-y-1">
+                  <label class="text-sm font-bold text-slate-700 ml-1">Assigned Class</label>
+                  <select id="stuClass" required
+                    class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all outline-none appearance-none">
+                    <option value="">Choose Class...</option>
+                    <option value="LKG Visista">LKG Visista</option>
+                    <option value="LKG Vijaya">LKG Vijaya</option>
+                    <option value="LKG Vijetha">LKG Vijetha</option>
+                    <option value="UKG Vinaya">UKG Vinaya</option>
+                    <option value="UKG Veena">UKG Veena</option>
+                    <option value="Class 1-Vishnu">Class 1-Vishnu</option>
+                    <option value="Class 1-Vidhya">Class 1-Vidhya</option>
+                    <option value="Class 2-Victory">Class 2-Victory</option>
+                    <option value="Class 3-Vishikha">Class 3-Vishikha</option>
+                    <option value="Class 4-Viswateja">Class 4-Viswateja</option>
+                    <option value="Class 5-Viswajith">Class 5-Viswajith</option>
+                    <option value="Class 6-Vijay Aditya">Class 6-Vijay Aditya</option>
+                    <option value="Class 7-Vikram Adithya">Class 7-Vikram Adithya</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="space-y-1">
+                <label class="text-sm font-bold text-slate-700 ml-1">Address</label>
+                <textarea id="stuAddress" required placeholder="Enter complete address" rows="3"
+                  class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all outline-none resize-none"></textarea>
+              </div>
+
+              <!-- Total Fee Section with Breakdown -->
+              <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                  <h3 class="text-sm font-bold text-slate-700 ml-1">Total Fee</h3>
+                  <button type="button" id="addTotalFee" class="text-blue-600 hover:text-blue-800 font-medium text-sm flex items-center gap-2">
+                    <i class="fas fa-plus"></i> Add Fee Item
+                  </button>
+                </div>
+                
+                <div id="totalFeeContainer" class="space-y-3">
+                  <!-- Total fee breakdown items will be added here -->
+                </div>
+                
+                <div class="pt-2">
+                  <div class="flex items-center justify-between p-3 bg-blue-50 rounded-xl">
+                    <span class="font-bold text-slate-700">Total Amount:</span>
+                    <span id="totalFeeSum" class="font-bold text-lg">₹0</span>
+                  </div>
+                  <input type="hidden" id="stuTotal" value="0">
+                </div>
+              </div>
+
+              <div class="space-y-1">
+                <label class="text-sm font-bold text-slate-700 ml-1">Date</label>
+                <input id="stuDate" type="date"
+                  class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all outline-none">
+              </div>
+
+              <div class="pt-6">
+                <button
+                  class="w-full bg-blue-600 text-white p-4 rounded-2xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-lg">
+                  <i class="fas fa-check-circle"></i>
+                  Save Student Record
+                </button>
+              </div>
+            </form>
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-blue-600 rounded-3xl p-6 text-white shadow-xl">
+            <h3 class="text-sm font-bold opacity-80 uppercase tracking-tighter mb-4">Live Preview</h3>
+            <div class="space-y-1">
+                <p id="prevName" class="text-2xl font-bold truncate">Student Name</p>
+                <p id="prevParent" class="opacity-90 text-sm">Parent: <span id="prevParentName">Not Provided</span></p>
+                <p id="prevClass" class="opacity-90 font-medium">Class: Not Selected</p>
+            </div>
+            <div class="mt-6 pt-6 border-t border-white/20">
+              <div class="mb-4">
+                <p class="text-[10px] uppercase font-bold opacity-70 mb-1">Address</p>
+                <p id="prevAddress" class="text-sm opacity-90 truncate">No address provided</p>
+              </div>
+              <div class="flex justify-between">
+                <div>
+                  <p class="text-[10px] uppercase font-bold opacity-70">Total Fee</p>
+                  <p id="prevBalance" class="text-2xl font-black">₹0</p>
+                </div>
+                <div class="bg-white/20 p-3 rounded-2xl self-end">
+                  <i class="fas fa-wallet fa-lg"></i>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-6">
+          <h2 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+              <i class="fas fa-lightbulb text-amber-500"></i>
+              Quick Checklist
+          </h2>
+          <ul class="space-y-3 text-sm text-slate-600">
+            <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Valid 10-digit mobile</li>
+            <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Parent name and address</li>
+            <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Correct class selection</li>
+            <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Due date for reminders</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+<script>
+const form = document.getElementById("studentForm");
+
+const nameInput = document.getElementById("stuName");
+const parentNameInput = document.getElementById("parentName");
+const phoneInput = document.getElementById("stuPhone");
+const classSelect = document.getElementById("stuClass");
+const addressInput = document.getElementById("stuAddress");
+const totalFeeInput = document.getElementById("stuTotal");
+
+const prevName = document.getElementById("prevName");
+const prevParent = document.getElementById("prevParentName");
+const prevClass = document.getElementById("prevClass");
+const prevAddress = document.getElementById("prevAddress");
+const prevBalance = document.getElementById("prevBalance");
+
+const totalFeeContainer = document.getElementById("totalFeeContainer");
+const totalFeeSum = document.getElementById("totalFeeSum");
+
+let totalFeeItems = [];
+
+/* ================= FEE ITEM ================= */
+function createFeeItem() {
+  const div = document.createElement("div");
+  div.className = "flex items-center gap-3 p-3 bg-slate-50 rounded-xl";
+
+  div.innerHTML = `
+    <select class="flex-1 p-2 border rounded-lg">
+      <option value="">Select Fee Type</option>
+      <option>School Fee</option>
+      <option>Van Fee</option>
+      <option>Others</option>
+    </select>
+    <input type="number" class="fee-amount w-32 p-2 border rounded-lg" placeholder="Amount">
+    <button type="button" class="text-red-500">✖</button>
+  `;
+
+  const amountInput = div.querySelector(".fee-amount");
+
+  amountInput.addEventListener("input", updateTotal);
+
+  div.querySelector("button").addEventListener("click", () => {
+    div.remove();
+    updateTotal();
+  });
+
+  totalFeeContainer.appendChild(div);
+}
+
+/* ================= TOTAL CALC ================= */
+function updateTotal() {
+  let total = 0;
+  document.querySelectorAll(".fee-amount").forEach(i => {
+    total += Number(i.value || 0);
+  });
+
+  totalFeeInput.value = total;
+  totalFeeSum.innerText = `₹${total}`;
+  prevBalance.innerText = `₹${total}`;
+}
+
+/* ================= PREVIEW ================= */
+function updatePreview() {
+  prevName.innerText = nameInput.value || "Student Name";
+  prevParent.innerText = parentNameInput.value || "Not Provided";
+  prevClass.innerText = classSelect.value ? `Class: ${classSelect.value}` : "Class: Not Selected";
+  prevAddress.innerText = addressInput.value || "No address provided";
+  prevBalance.innerText = `₹${totalFeeInput.value || 0}`;
+}
+
+[nameInput, parentNameInput, phoneInput, addressInput].forEach(el =>
+  el.addEventListener("input", updatePreview)
+);
+classSelect.addEventListener("change", updatePreview);
+
+/* ================= SUBMIT ================= */
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const editId = localStorage.getItem("editStudentId");
+
+  const payload = {
+    name: nameInput.value,
+    parent_name: parentNameInput.value,
+    phone: phoneInput.value,
+    class_name: classSelect.value,
+    address: addressInput.value,
+    total_fee: Number(totalFeeInput.value || 0)
+  };
+
+  const url = editId
+    ? `http://localhost:3000/students/update/${editId}`
+    : "http://localhost:3000/students/add";
+
+  await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+
+  localStorage.removeItem("editStudentId");
+  window.location.href = "list.html";
+});
+
+/* ================= EDIT MODE ================= */
+const editId = localStorage.getItem("editStudentId");
+
+if (editId) {
+  document.getElementById("pageTitle").innerText = "Edit Student Profile";
+
+  fetch(`http://localhost:3000/students/${editId}`)
+    .then(res => res.json())
+    .then(s => {
+      nameInput.value = s.name;
+      parentNameInput.value = s.parent_name;
+      phoneInput.value = s.phone;
+      classSelect.value = s.class_name;
+      addressInput.value = s.address || "";
+
+      // IMPORTANT FIX
+      totalFeeInput.value = s.total_fee || 0;
+      totalFeeSum.innerText = `₹${s.total_fee || 0}`;
+      prevBalance.innerText = `₹${s.total_fee || 0}`;
+
+      totalFeeContainer.innerHTML = "";
+      createFeeItem(); // always one empty row
+      updatePreview();
+    });
+}
+
+/* INIT */
+document.getElementById("addTotalFee").addEventListener("click", createFeeItem);
+createFeeItem();
+updatePreview();
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fee Receipt</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    @page {
+      size: A4;
+      margin: 20mm;
+    }
+
+    @media print {
+      .no-print { display: none; }
+      body { background: white; }
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 py-8">
+
+<div class="max-w-3xl mx-auto bg-white p-8 border border-gray-300">
+
+  <!-- SCHOOL HEADER -->
+  <div class="text-center border-b pb-4 mb-6">
+    <img src="123.jpeg" class="h-20 mx-auto mb-2">
+    <p class="text-sm text-gray-600">
+      Thummindapalyam Village, Chittoor Mandal, Chittoor
+    </p>
+    <p class="text-sm font-semibold">Phone: +91 9441644228</p>
+  </div>
+
+  <!-- TITLE -->
+  <div class="text-center mb-6">
+    <h2 class="text-lg font-bold underline">FEE PAYMENT RECEIPT</h2>
+  </div>
+
+  <!-- RECEIPT INFO -->
+  <div class="flex justify-between mb-6 text-sm">
+    <div>
+      <p><strong>Voucher No:</strong> <span id="voucher">-</span></p>
+      <p><strong>Student ID:</strong> <span id="student">-</span></p>
+    </div>
+    <div class="text-right">
+      <p><strong>Date:</strong> <span id="date">-</span></p>
+    </div>
+  </div>
+
+  <!-- PAYMENT DETAILS -->
+  <table class="w-full border border-gray-400 text-sm mb-8">
+    <thead>
+      <tr class="bg-gray-200">
+        <th class="border border-gray-400 p-2 text-left">Description</th>
+        <th class="border border-gray-400 p-2 text-right">Amount (₹)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td id="description" class="border border-gray-400 p-2">
+          Fee Paid
+        </td>
+        <td class="border border-gray-400 p-2 text-right font-bold">
+          ₹ <span id="amount">0</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- TOTAL -->
+  <div class="text-right mb-10">
+    <p class="text-lg font-bold">
+      Total Paid: ₹ <span id="amountTotal">0</span>
+    </p>
+  </div>
+
+  <!-- SIGNATURES -->
+  <div class="flex justify-between mt-16">
+    <div class="text-center">
+      <div class="h-16 border-b border-gray-400 w-48"></div>
+      <p class="mt-2 font-semibold">Accountant</p>
+    </div>
+
+    <div class="text-center">
+      <div class="h-16 border-b border-gray-400 w-48"></div>
+      <p class="mt-2 font-semibold">Principal</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="text-center text-xs text-gray-500 mt-10">
+    This is a computer generated receipt.
+  </div>
+
+  <!-- PRINT BUTTON -->
+  <div class="no-print text-center mt-6">
+    <button onclick="window.print()"
+      class="px-6 py-2 bg-blue-600 text-white rounded font-bold">
+      Print Receipt
+    </button>
+  </div>
+
+</div>
+
+<script>
+  const p = new URLSearchParams(window.location.search);
+
+  const studentId = p.get("student");
+  const serial = p.get("voucher");
+  const rawDate = p.get("date");
+  const amount = p.get("amount");
+  const feeType = p.get("fee_type");
+
+  /* Voucher */
+  if (studentId && serial) {
+    document.getElementById("voucher").innerText =
+      `VC-${studentId}-${String(serial).padStart(2, "0")}`;
+  }
+
+  /* Student */
+  document.getElementById("student").innerText = studentId ?? "-";
+
+  /* Date */
+  document.getElementById("date").innerText =
+    rawDate
+      ? new Date(rawDate).toLocaleDateString("en-IN", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric"
+        })
+      : "-";
+
+  /* Description */
+  if (feeType) {
+    document.getElementById("description").innerText =
+      `${feeType.toUpperCase()} Fee Paid`;
+  }
+
+  /* Amount */
+  const safeAmount = amount ?? "0";
+  document.getElementById("amount").innerText = safeAmount;
+  document.getElementById("amountTotal").innerText = safeAmount;
+</script>
+
+</body>
+</html>

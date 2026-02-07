@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vignanateja EM School | Elite Dashboard</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        .bg-mesh {
+            background-color: #f8fafc;
+            background-image: radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.05) 0px, transparent 50%),
+                              radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.05) 0px, transparent 50%);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.02);
+        }
+
+        .action-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .action-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 30px -10px rgba(0, 0, 0, 0.08);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #1e40af 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .pulse-soft {
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse-ring {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .7; }
+        }
+    </style>
+</head>
+
+<body class="bg-mesh min-h-screen pb-12">
+
+<header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+        <div class="flex items-center gap-4">
+            <div class="relative">
+                <img src="123.jpeg" alt="Logo" class="h-16 w-16 rounded-2xl object-contain bg-white shadow-inner border-2 border-white">
+                <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full pulse-soft"></div>
+            </div>
+            <div class="hidden sm:block">
+                <h1 class="text-lg font-extrabold text-slate-800 leading-tight tracking-tight">Sri Vignanateja EM School</h1>
+                <p class="text-[10px] font-bold text-blue-600 uppercase tracking-widest">Administrative Hub</p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <div class="hidden md:flex items-center px-4 py-2 bg-slate-100 rounded-xl text-slate-500 mr-2">
+                <i class="fas fa-search text-xs mr-2"></i>
+                <input type="text" id="searchInput" placeholder="Search..." class="bg-transparent border-none outline-none text-xs font-semibold uppercase w-40">
+            </div>
+            <a href="newstudent.html" onclick="localStorage.removeItem('editStudentId')"
+               class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 transition-all shadow-lg shadow-blue-200 active:scale-95">
+                <i class="fas fa-plus"></i> <span class="hidden sm:inline">Add Student</span>
+            </a>
+        </div>
+    </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-6 pt-8">
+    
+    <div class="mb-10">
+        <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Good Morning, Admin 👋</h2>
+        <p class="text-slate-500 mt-1">Here is what's happening at your school today.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        
+        <div class="lg:col-span-1 space-y-4">
+            <div onclick="window.location.href='attendance.html'"
+                 class="action-card glass-card p-6 rounded-[2rem] cursor-pointer group border-b-4 border-purple-500 hover:bg-purple-50/30 transition-colors">
+                <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-purple-600 group-hover:text-white transition-all">
+                    <i class="fas fa-calendar-check text-xl"></i>
+                </div>
+                <h3 class="font-bold text-slate-800">Attendance</h3>
+                <p class="text-xs text-slate-500 mt-1">Mark daily student presence</p>
+            </div>
+
+            <div onclick="window.location.href='list.html'"
+                 class="action-card glass-card p-6 rounded-[2rem] cursor-pointer group border-b-4 border-emerald-500 hover:bg-emerald-50/30 transition-colors">
+                <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-emerald-600 group-hover:text-white transition-all">
+                    <i class="fas fa-address-book text-xl"></i>
+                </div>
+                <h3 class="font-bold text-slate-800">Student Directory</h3>
+                <p class="text-xs text-slate-500 mt-1">Full database and records</p>
+            </div>
+
+            <div onclick="window.location.href='pdf.html'"
+                 class="action-card glass-card p-6 rounded-[2rem] cursor-pointer group border-b-4 border-orange-500 hover:bg-orange-50/30 transition-colors">
+                <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-orange-600 group-hover:text-white transition-all">
+                    <i class="fas fa-receipt text-xl"></i>
+                </div>
+                <h3 class="font-bold text-slate-800">Financial Reports</h3>
+                <p class="text-xs text-slate-500 mt-1">Generate receipts and PDFs</p>
+            </div>
+        </div>
+
+        <div class="lg:col-span-3 space-y-6">
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm flex items-center gap-4">
+                    <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">Total Students</p>
+                        <p id="statCount" class="text-xl font-black text-slate-800">--</p>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm flex items-center gap-4">
+                    <div class="w-10 h-10 bg-green-50 text-green-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">Fees Collected</p>
+                        <p id="feesCollected" class="text-xl font-black text-slate-800 tracking-tighter">₹ 0</p>
+                    </div>
+                </div>
+                <div class="hidden md:flex bg-gradient-to-br from-blue-600 to-indigo-700 p-5 rounded-3xl shadow-lg shadow-blue-200 items-center gap-4 text-white">
+                    <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-bold text-blue-100 uppercase tracking-widest leading-none">Academic Year</p>
+                        <p class="text-xl font-black">2025 - 26</p>
+                    </div>
+                </div>
+            </div>
+
+            <section class="bg-white rounded-[2.5rem] shadow-xl shadow-slate-200/40 overflow-hidden border border-slate-100">
+                <div class="p-8 border-b border-slate-50 flex justify-between items-center bg-slate-50/50">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800 tracking-tight">Latest Enrollments</h2>
+                        <p class="text-xs text-slate-400 font-medium">Monitoring registered students</p>
+                    </div>
+                    <a href="list.html" class="text-xs font-bold text-blue-600 hover:bg-blue-50 px-4 py-2 rounded-xl transition-all">View All Records</a>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-white text-slate-400 text-[10px] uppercase font-black tracking-[0.15em]">
+                            <tr>
+                                <th class="px-8 py-5">Profile</th>
+                                <th class="px-8 py-5">Class</th>
+                                <th class="px-8 py-5 text-center">Status</th>
+                                <th class="px-8 py-5 text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentTableBody" class="divide-y divide-slate-50">
+                            </tbody>
+                    </table>
+                </div>
+
+                <div id="noDataMessage" class="hidden py-24 text-center">
+                    <div class="bg-slate-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-user-slash text-slate-300 text-2xl"></i>
+                    </div>
+                    <p class="text-slate-400 font-bold uppercase tracking-widest text-xs">No students found.</p>
+                </div>
+            </section>
+        </div>
+    </div>
+</main>
+
+<script>
+let allStudents = []; // Store the full list for searching
+
+async function renderStudents() {
+    try {
+        const res = await fetch("http://localhost:3000/students");
+        allStudents = await res.json();
+        
+        // Update Stats
+        document.getElementById("statCount").innerText = allStudents.length;
+        let totalPaid = allStudents.reduce((sum, s) => sum + Number(s.paid_fee || 0), 0);
+        document.getElementById("feesCollected").innerText = `₹ ${totalPaid.toLocaleString('en-IN')}`;
+
+        displayList(allStudents.slice(0, 5)); // Initial view of latest 5
+    } catch (err) {
+        console.error(err);
+        alert("Failed to sync with server. Please check connection! ❌");
+    }
+}
+
+function displayList(students) {
+    const tbody = document.getElementById("studentTableBody");
+    const noData = document.getElementById("noDataMessage");
+    tbody.innerHTML = "";
+
+    if (students.length === 0) {
+        noData.classList.remove("hidden");
+        return;
+    }
+
+    noData.classList.add("hidden");
+    students.forEach(s => {
+        const initial = s.name.charAt(0).toUpperCase();
+        tbody.innerHTML += `
+            <tr class="hover:bg-blue-50/30 transition-colors group">
+                <td class="px-8 py-5">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center font-bold text-lg shadow-md transition-transform">
+                            ${initial}
+                        </div>
+                        <div>
+                            <p class="font-bold text-slate-800 text-sm">${s.name}</p>
+                            <p class="text-[10px] text-slate-400 font-medium">
+                                <i class="fas fa-phone-alt mr-1"></i> ${s.phone}
+                            </p>
+                        </div>
+                    </div>
+                </td>
+                <td class="px-8 py-5">
+                    <span class="text-[11px] font-extrabold bg-slate-100 text-slate-600 px-3 py-1.5 rounded-lg border border-slate-200 uppercase tracking-tighter">
+                        ${s.class_name}
+                    </span>
+                </td>
+                <td class="px-8 py-5 text-center">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-bold border border-emerald-100">
+                        <div class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></div>
+                        ACTIVE
+                    </span>
+                </td>
+                <td class="px-8 py-5 text-right">
+                    <a href="list.html" class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-blue-600 hover:border-blue-200 hover:shadow-sm transition-all">
+                        <i class="fas fa-chevron-right text-xs"></i>
+                    </a>
+                </td>
+            </tr>`;
+    });
+}
+
+// THE SEARCH BAR LOGIC
+document.getElementById("searchInput").addEventListener("input", (e) => {
+    const term = e.target.value.toLowerCase();
+    const filtered = allStudents.filter(s => 
+        s.name.toLowerCase().includes(term) || 
+        s.phone.includes(term) || 
+        s.class_name.toLowerCase().includes(term)
+    );
+    // Show only 5 results if many matches, otherwise show all matches
+    displayList(filtered.length > 5 ? filtered.slice(0, 5) : filtered);
+});
+
+renderStudents();
+</script>
+
+</body>
+</html>

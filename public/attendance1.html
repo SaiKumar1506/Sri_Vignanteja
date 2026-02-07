@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Analytics | Vignanateja EM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .attendance-progress { height: 8px; border-radius: 4px; overflow: hidden; }
+        .progress-excellent { background-color: #10b981; }
+        .progress-good { background-color: #3b82f6; }
+        .progress-poor { background-color: #ef4444; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    
+    <header class="bg-white shadow-sm border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <a href="attendance.html" class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-900 hover:text-white transition-all">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <div>
+                    <h1 class="text-xl font-bold text-gray-800">Attendance Analytics</h1>
+                    <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Vignanateja EM</p>
+                </div>
+            </div>
+            <a href="index.html" class="px-4 py-2 rounded-xl bg-slate-800 text-white font-bold text-sm">Dashboard</a>
+        </div>
+    </header>
+    
+    <main class="max-w-7xl mx-auto px-6 py-8">
+        <div class="bg-white rounded-2xl shadow-sm border p-6 mb-8 flex flex-col md:flex-row gap-6 items-end">
+            <div class="flex-1">
+                <label class="block text-sm font-bold text-gray-700 mb-1">Select Class</label>
+                <select id="classSelect" class="w-full p-3 bg-gray-50 border border-gray-300 rounded-xl outline-none font-bold">
+                    <option value="">-- Loading Classes... --</option>
+                </select>
+            </div>
+            <button id="viewButton" class="bg-blue-600 text-white p-3 px-8 rounded-xl font-bold hover:bg-blue-700 transition-all flex items-center gap-2">
+                <i class="fas fa-eye"></i> View Attendance
+            </button>
+        </div>
+        
+        <div class="bg-white rounded-2xl shadow-sm border overflow-hidden">
+            <div id="tableContainer" class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-gray-50 border-b">
+                        <tr>
+                            <th class="py-4 px-6 text-xs font-bold text-gray-700 uppercase">S No.</th>
+                            <th class="py-4 px-6 text-xs font-bold text-gray-700 uppercase">Student Name</th>
+                            <th class="py-4 px-6 text-xs font-bold text-gray-700 uppercase text-center">Attended</th>
+                            <th class="py-4 px-6 text-xs font-bold text-gray-700 uppercase text-center">Total Days</th>
+                            <th class="py-4 px-6 text-xs font-bold text-gray-700 uppercase">Attendance %</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendanceTableBody" class="divide-y divide-gray-200">
+                        <tr><td colspan="5" class="p-20 text-center text-gray-400">Select a class to view records</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        const classSelect = document.getElementById('classSelect');
+        const viewButton = document.getElementById('viewButton');
+        const tableBody = document.getElementById('attendanceTableBody');
+
+        // 1. Fetch real classes from DB so the dropdown works
+        async function loadClasses() {
+            try {
+                const res = await fetch("http://localhost:3000/students");
+                const students = await res.json();
+                const classes = [...new Set(students.map(s => s.class_name))];
+                
+                classSelect.innerHTML = '<option value="">-- Select Class --</option>';
+                classes.forEach(c => {
+                    if(c) classSelect.innerHTML += `<option value="${c}">${c}</option>`;
+                });
+            } catch (err) {
+                classSelect.innerHTML = '<option value="">Error connecting to server</option>';
+            }
+        }
+
+        // 2. Click Logic
+        viewButton.onclick = async () => {
+            const cls = classSelect.value;
+            if(!cls) return alert("Please select a class");
+            
+            tableBody.innerHTML = '<tr><td colspan="5" class="p-20 text-center">Loading Records...</td></tr>';
+            
+            try {
+                // Fetching from the analytics route we made in server.js
+                const res = await fetch(`http://localhost:3000/attendance/analytics/${encodeURIComponent(cls)}`);
+                const data = await res.json();
+                
+                if (data.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="5" class="p-20 text-center text-gray-400">No records found for this class.</td></tr>';
+                    return;
+                }
+
+                tableBody.innerHTML = data.map((s, i) => {
+                    const attended = parseInt(s.attended) || 0;
+                    const total = parseInt(s.total) || 0;
+                    const pct = total > 0 ? Math.round((attended / total) * 100) : 0;
+                    const color = pct >= 90 ? 'progress-excellent' : pct >= 75 ? 'progress-good' : 'progress-poor';
+                    
+                    return `
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="py-4 px-6 text-sm font-bold text-gray-400">${i + 1}</td>
+                        <td class="py-4 px-6 text-sm font-bold text-gray-800">${s.name}</td>
+                        <td class="py-4 px-6 text-sm font-bold text-gray-800 text-center">${attended}</td>
+                        <td class="py-4 px-6 text-sm font-bold text-gray-800 text-center">${total}</td>
+                        <td class="py-4 px-6">
+                            <div class="flex flex-col gap-1">
+                                <span class="text-xs font-black ${pct >= 75 ? 'text-green-600' : 'text-red-600'}">${pct}%</span>
+                                <div class="attendance-progress bg-gray-100">
+                                    <div class="h-full ${color}" style="width: ${pct}%"></div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>`;
+                }).join("");
+            } catch (err) {
+                tableBody.innerHTML = '<tr><td colspan="5" class="p-20 text-center text-red-500 font-bold">Error loading data. Check Node.js console.</td></tr>';
+            }
+        };
+
+        loadClasses();
+    </script>
+</body>
+</html>

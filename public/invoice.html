@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Sri Vignanateja | Official Receipt</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        @page {
+            size: A4;
+            margin: 10mm;
+        }
+
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; margin: 0 !important; }
+            .invoice-container {
+                box-shadow: none !important;
+                border: none !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+        }
+
+        .bg-mesh {
+            background-color: #f8fafc;
+            background-image:
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.05), transparent 50%),
+                radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.05), transparent 50%);
+        }
+    </style>
+</head>
+
+<body class="bg-mesh min-h-screen text-slate-800">
+
+<nav class="no-print bg-white border-b px-6 py-4 flex justify-between items-center">
+    <a href="list.html" class="font-bold text-slate-600">
+        <i class="fas fa-arrow-left"></i> Directory
+    </a>
+    <button onclick="window.print()" class="bg-blue-600 text-white px-5 py-2 rounded-xl font-bold text-sm">
+        <i class="fas fa-print"></i> Print Receipt
+    </button>
+</nav>
+
+<main class="py-6 px-4">
+<div class="bg-white max-w-[800px] mx-auto p-8 rounded-3xl shadow-xl invoice-container">
+
+    <!-- HEADER -->
+    <div class="text-center border-b pb-6 mb-6">
+        <img src="123.jpeg" class="h-16 mx-auto mb-2">
+        <p class="text-xs text-slate-500">Thummindapalyam Village, Chittoor Mandal, Chittoor</p>
+        <p class="text-[10px] font-bold text-blue-600 mt-1">Phone: +91 9441644228</p>
+
+        <div class="mt-5 text-left">
+            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">
+                Billing Date
+            </p>
+            <p class="text-sm font-bold" id="billDate">--/--/----</p>
+        </div>
+    </div>
+
+    <!-- STUDENT DETAILS -->
+    <div class="grid grid-cols-2 gap-3 mb-6">
+        <div class="p-3 bg-slate-50 rounded-xl">
+            <span class="text-[8px] font-black text-slate-400 uppercase">Student</span>
+            <p class="text-xs font-bold" id="studentName">--</p>
+            <p class="text-[10px]" id="studentClass">Class: --</p>
+        </div>
+
+        <div class="p-3 bg-slate-50 rounded-xl">
+            <span class="text-[8px] font-black text-slate-400 uppercase">Contact</span>
+            <p class="text-xs font-bold" id="parentName">--</p>
+            <p class="text-[10px]" id="phone">--</p>
+        </div>
+
+        <div class="col-span-2 p-3 bg-slate-50 rounded-xl">
+            <span class="text-[8px] font-black text-slate-400 uppercase">Address</span>
+            <p class="text-[10px]" id="address">--</p>
+        </div>
+    </div>
+
+    <!-- FEES TABLE -->
+    <table class="w-full text-xs border mb-6">
+        <thead class="bg-slate-900 text-white">
+            <tr>
+                <th class="p-3 text-left">Fee Category</th>
+                <th class="p-3 text-center">Date</th>
+                <th class="p-3 text-right">Amount</th>
+            </tr>
+        </thead>
+        <tbody id="feeBody"></tbody>
+    </table>
+
+    <!-- TOTAL -->
+    <div class="bg-slate-900 text-white rounded-2xl p-5 text-sm">
+        <div class="flex justify-between">
+            <span>Total Fee</span>
+            <span id="total">₹0</span>
+        </div>
+        <div class="flex justify-between text-emerald-400 mt-2">
+            <span>Paid</span>
+            <span id="paid">₹0</span>
+        </div>
+        <div class="flex justify-between mt-2 font-black">
+            <span>Due</span>
+            <span id="balance">₹0</span>
+        </div>
+    </div>
+
+    <!-- SIGNATURE -->
+    <div class="mt-10 text-right">
+        <div class="inline-block border-t-2 border-slate-900 w-48 pt-1">
+            <p class="text-[10px] font-black uppercase">Principal Signature</p>
+        </div>
+    </div>
+
+    <p class="text-[8px] text-center text-slate-400 mt-8 italic">
+        This is a computer-generated document.
+    </p>
+
+</div>
+</main>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const studentId = params.get("student_id");
+
+if (!studentId) {
+    alert("No student identified");
+    window.location.href = "list.html";
+}
+
+fetch(`http://localhost:3000/students/invoice/${studentId}`)
+  .then(res => res.json())
+  .then(data => {
+
+    document.getElementById("billDate").innerText = data.date;
+    document.getElementById("studentName").innerText = data.name;
+    document.getElementById("studentClass").innerText = `Class: ${data.class}`;
+    document.getElementById("parentName").innerText = data.parent;
+    document.getElementById("phone").innerText = data.phone;
+    document.getElementById("address").innerText = data.address;
+
+    let totalPaid = 0;
+    const tbody = document.getElementById("feeBody");
+    tbody.innerHTML = "";
+
+    data.fees.forEach(f => {
+        totalPaid += Number(f.paid);
+        tbody.innerHTML += `
+        <tr>
+            <td class="p-3 font-bold">${f.type}</td>
+            <td class="p-3 text-center">${f.date}</td>
+            <td class="p-3 text-right">₹${Number(f.paid).toLocaleString("en-IN")}</td>
+        </tr>`;
+    });
+
+    const grand = Number(data.total_fee);
+    document.getElementById("total").innerText = `₹${grand}`;
+    document.getElementById("paid").innerText = `₹${totalPaid}`;
+    document.getElementById("balance").innerText = `₹${grand - totalPaid}`;
+  })
+  .catch(() => alert("Unable to load receipt"));
+</script>
+
+</body>
+</html>
