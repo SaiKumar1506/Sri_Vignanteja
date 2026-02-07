@@ -190,6 +190,9 @@ const prevBalance = document.getElementById("prevBalance");
 const totalFeeContainer = document.getElementById("totalFeeContainer");
 const totalFeeSum = document.getElementById("totalFeeSum");
 
+// ✅ YOUR RENDER URL - ONLY THIS ONE
+const API_BASE_URL = "https://sri-vignanteja.onrender.com";
+
 let totalFeeItems = [];
 
 /* ================= FEE ITEM ================= */
@@ -250,29 +253,78 @@ classSelect.addEventListener("change", updatePreview);
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const editId = localStorage.getItem("editStudentId");
+  // Show loading state
+  const submitBtn = form.querySelector("button[type='submit']");
+  const originalText = submitBtn.innerHTML;
+  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+  submitBtn.disabled = true;
 
-  const payload = {
-    name: nameInput.value,
-    parent_name: parentNameInput.value,
-    phone: phoneInput.value,
-    class_name: classSelect.value,
-    address: addressInput.value,
-    total_fee: Number(totalFeeInput.value || 0)
-  };
+  try {
+    const editId = localStorage.getItem("editStudentId");
 
-  const url = editId
-    ? `http://localhost:3000/students/update/${editId}`
-    : "http://localhost:3000/students/add";
+    // Calculate total fee from all fee items
+    let totalFee = 0;
+    document.querySelectorAll(".fee-amount").forEach(i => {
+      totalFee += Number(i.value || 0);
+    });
 
-  await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  });
+    const payload = {
+      name: nameInput.value.trim(),
+      parent_name: parentNameInput.value.trim(),
+      phone: phoneInput.value.trim(),
+      class_name: classSelect.value,
+      address: addressInput.value.trim(),
+      total_fee: totalFee,
+      paid_fee: 0, // Default to 0 for new student
+      balance: totalFee // Balance equals total fee initially
+    };
 
-  localStorage.removeItem("editStudentId");
-  window.location.href = "list.html";
+    // ✅ ONLY USE RENDER URL - NO LOCALHOST
+    const url = editId
+      ? `${API_BASE_URL}/students/update/${editId}`
+      : `${API_BASE_URL}/students/add`;
+
+    console.log("📤 Submitting to:", url);
+    console.log("📦 Payload:", payload);
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    // Check if response is OK
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Server error ${response.status}: ${errorText}`);
+    }
+
+    const result = await response.json();
+    console.log("✅ Server response:", result);
+
+    // Success message
+    alert(editId ? "✅ Student updated successfully!" : "✅ Student added successfully!");
+    
+    localStorage.removeItem("editStudentId");
+    window.location.href = "list.html";
+
+  } catch (error) {
+    console.error("❌ Submit error:", error);
+    
+    // Better error message
+    if (error.message.includes("Failed to fetch")) {
+      alert("❌ Cannot connect to server. Please check:\n1. Your internet connection\n2. Server is running at: " + API_BASE_URL);
+    } else {
+      alert(`❌ Failed to save student: ${error.message}`);
+    }
+    
+    // Reset button
+    submitBtn.innerHTML = originalText;
+    submitBtn.disabled = false;
+  }
 });
 
 /* ================= EDIT MODE ================= */
@@ -280,34 +332,59 @@ const editId = localStorage.getItem("editStudentId");
 
 if (editId) {
   document.getElementById("pageTitle").innerText = "Edit Student Profile";
+  
+  console.log("📥 Loading student data for ID:", editId);
 
-  fetch(`http://students/${editId}`)
-    .then(res => res.json())
-    .then(s => {
-      nameInput.value = s.name;
-      parentNameInput.value = s.parent_name;
-      phoneInput.value = s.phone;
-      classSelect.value = s.class_name;
-      addressInput.value = s.address || "";
+  try {
+    // ✅ ONLY USE RENDER URL - NO LOCALHOST
+    const response = await fetch(`${API_BASE_URL}/students/${editId}`);
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch student: ${response.status}`);
+    }
+    
+    const s = await response.json();
+    console.log("📋 Student data loaded:", s);
+    
+    // Fill form fields
+    nameInput.value = s.name || "";
+    parentNameInput.value = s.parent_name || "";
+    phoneInput.value = s.phone || "";
+    classSelect.value = s.class_name || "";
+    addressInput.value = s.address || "";
 
-      // IMPORTANT FIX
-      totalFeeInput.value = s.total_fee || 0;
-      totalFeeSum.innerText = `₹${s.total_fee || 0}`;
-      prevBalance.innerText = `₹${s.total_fee || 0}`;
+    // Set total fee (if not in data, use 0)
+    const totalFee = s.total_fee || 0;
+    totalFeeInput.value = totalFee;
+    totalFeeSum.innerText = `₹${totalFee}`;
+    prevBalance.innerText = `₹${totalFee}`;
 
-      totalFeeContainer.innerHTML = "";
-      createFeeItem(); // always one empty row
-      updatePreview();
-    });
+    // Clear fee container and add one default item
+    totalFeeContainer.innerHTML = "";
+    
+    // If there are existing fee breakdowns in data, populate them
+    // Otherwise create one empty item
+    createFeeItem();
+    
+    updatePreview();
+    
+  } catch (error) {
+    console.error("❌ Edit mode error:", error);
+    alert("❌ Failed to load student data for editing. Redirecting to list.");
+    window.location.href = "list.html";
+  }
 }
 
-/* INIT */
+/* ================= INIT ================= */
 document.getElementById("addTotalFee").addEventListener("click", createFeeItem);
-createFeeItem();
+createFeeItem(); // Create first fee item
 updatePreview();
+
+console.log("🚀 Student form initialized. API URL:", API_BASE_URL);
 </script>
 
 
 </body>
 
 </html>
+
