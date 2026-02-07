@@ -189,7 +189,9 @@ let allStudents = []; // Store the full list for searching
 
 async function renderStudents() {
     try {
-        const res = await fetch("http://localhost:3000/students");
+
+        const res = await fetch("https://sri-vignanteja.onrender.com/students");
+        
         allStudents = await res.json();
         
         // Update Stats
@@ -268,4 +270,5 @@ renderStudents();
 </script>
 
 </body>
+
 </html>
