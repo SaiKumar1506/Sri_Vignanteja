@@ -281,7 +281,7 @@ const editId = localStorage.getItem("editStudentId");
 if (editId) {
   document.getElementById("pageTitle").innerText = "Edit Student Profile";
 
-  fetch(`http://localhost:3000/students/${editId}`)
+  fetch(`http://students/${editId}`)
     .then(res => res.json())
     .then(s => {
       nameInput.value = s.name;
@@ -309,4 +309,5 @@ updatePreview();
 
 
 </body>
+
 </html>
